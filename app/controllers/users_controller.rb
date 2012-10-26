@@ -12,10 +12,18 @@ class UsersController < ApplicationController
   end
 
   def new
+    if signed_in?
+        redirect_to root_path, notice: "No create for you!."
+    end
+    
     @user = User.new
   end
 
   def create
+    if signed_in?
+        redirect_to root_path, notice: "No create for you!."
+    end
+
     @user = User.new(params[:user])
     if @user.save
       sign_in @user

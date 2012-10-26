@@ -19,7 +19,7 @@ describe User do
   it { should respond_to(:authenticate) }
 
   it { should be_valid }
-  it { should_not be_admin }
+  it { should_not be_admin }# --- ustvari isto kao i (*), tak da (*) možemo i zakomentirati
 
   describe "with admin attribute set to 'true'" do
     before do
@@ -28,6 +28,25 @@ describe User do
     end
 
     it { should be_admin }
+  end
+
+#(*)
+  describe "with admin attribute set to 'false'" do
+    before do
+      @user.save!
+      @user.admin?
+    end
+
+    it { should_not be_admin }
+  end
+#(*)
+
+  describe "accessible attributes" do
+    it "should not allow access to admin attribute" do
+      expect do
+        User.new(admin: false)
+      end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end    
   end
 
   describe "when name is not present" do
