@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def index
@@ -13,9 +14,9 @@ class UsersController < ApplicationController
 
   def new
     if signed_in?
-        redirect_to root_path, notice: "No create for you!."
+        redirect_to root_path, notice: "No new for you!."
     end
-    
+
     @user = User.new
   end
 
@@ -56,18 +57,17 @@ class UsersController < ApplicationController
 
   private
 
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-
-      #redirect_to signin_url, notice: "Please sign in." unless signed_in?
-      ## The code above is equivalent to the more verbose
-      #flash[:notice] = "Please sign in."
-      #redirect_to signin_url
-
-    end
+    #def signed_in_user
+    #  unless signed_in?
+    #    store_location
+    #    redirect_to signin_url, notice: "Please sign in."
+    #  end
+    #
+    #  #redirect_to signin_url, notice: "Please sign in." unless signed_in?
+    #  ## The code above is equivalent to the more verbose
+    #  #flash[:notice] = "Please sign in."
+    #  #redirect_to signin_url
+    #end
 
     def correct_user
       @user = User.find(params[:id])
