@@ -1,8 +1,16 @@
 SampleApp::Application.routes.draw do
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+  #You might suspect that the URIs will look like /users/1/following and /users/1/followers, 
+  #and that is exactly what the code in Listing 11.18 does. 
+  
   resources :sessions,   only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
-
+  resources :relationships, only: [:create, :destroy]
+  
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

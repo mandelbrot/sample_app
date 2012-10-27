@@ -5,7 +5,7 @@ module SessionsHelper
     ##ovaj permanent je ustvari 20 godina, ili drugačije zapisano
     #cookies[:remember_token] = { value:   user.remember_token,
     #                         expires: 20.years.from_now.utc }
-    self.current_user = user
+    current_user = user
   end
 
   def signed_in?
